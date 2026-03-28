@@ -142,7 +142,7 @@ Once triggered:
 ## 🎯 Attack Summary
 
 ```text
- Web Enumeration → WordPress → File Upload → Reverse Shell → Cron Exploit → Root
+  Web Enumeration → WordPress → File Upload → Reverse Shell → Cron Exploit → Root
 ```
 
 ---
