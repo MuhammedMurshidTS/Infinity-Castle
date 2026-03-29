@@ -1,4 +1,4 @@
-# 🏯 Infinity Castle — Vulnerable Machine
+# 🏯  Infinity Castle — Vulnerable Machine
 
 ## 📌 Overview
 
